@@ -2,11 +2,11 @@
   "name": "wiki-racer-frontend",
   "version": "1.0.0",
   "scripts": {
-    "build": "CI=false SKIP_PREFLIGHT_CHECK=true react-scripts build"
+    "build": "CI=false DISABLE_ESLINT_PLUGIN=true FAST_REFRESH=false react-scripts build"
   },
   "dependencies": {
     "react": "^18.2.0",
-    "react-dom": "^18.2.0",
+    "react-dom": "^18.2.0", 
     "react-scripts": "5.0.1"
   }
 }

@@ -1,8 +1,20 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
 import styles from './Home.module.css'
 
-const Home: React.FC = () => {
+interface HomeProps {
+  navigate?: (path: string) => void
+}
+
+const Home: React.FC<HomeProps> = ({ navigate }) => {
+  const handleNavigate = (page: string) => {
+    if (navigate) {
+      navigate(page)
+    } else {
+      // 如果没有 navigate 函数，使用简单的页面跳转
+      window.location.href = `/${page}`
+    }
+  }
+
   return (
     <div className={styles.container}>
       <div className={styles.hero}>
@@ -25,12 +37,18 @@ const Home: React.FC = () => {
         </div>
 
         <div className={styles.actions}>
-          <Link to="/game" className={styles.primaryButton}>
+          <button 
+            onClick={() => handleNavigate('game')} 
+            className={styles.primaryButton}
+          >
             开始游戏
-          </Link>
-          <Link to="/leaderboard" className={styles.secondaryButton}>
+          </button>
+          <button 
+            onClick={() => handleNavigate('leaderboard')} 
+            className={styles.secondaryButton}
+          >
             查看排行榜
-          </Link>
+          </button>
         </div>
       </div>
     </div>

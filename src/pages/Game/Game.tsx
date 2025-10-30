@@ -3,16 +3,19 @@ import { useGame } from '../../hooks/useGame'
 import { GameForm } from '../../components/game/GameForm/GameForm'
 import { GameResult } from '../../components/game/GameResult/GameResult'
 import { LoadingSpinner } from '../../components/common/LoadingSpinner'
-import { toast } from 'react-hot-toast'
 import styles from './Game.module.css'
 
-const Game: React.FC = () => {
+interface GameProps {
+  navigate?: (path: string) => void
+}
+
+const Game: React.FC<GameProps> = ({ navigate }) => {
   const [showResult, setShowResult] = useState(false)
   const { currentGame, loading, error, createGame, resetGame } = useGame()
 
   useEffect(() => {
     if (error) {
-      toast.error(error)
+      alert(`错误: ${error}`)
     }
   }, [error])
 
@@ -21,7 +24,7 @@ const Game: React.FC = () => {
       console.log('🎮 开始游戏:', { start, end })
       await createGame({ start, end })
       setShowResult(true)
-      toast.success('路径搜索完成！')
+      alert('路径搜索完成！')
     } catch (err) {
       console.error('游戏创建失败:', err)
     }
@@ -30,7 +33,7 @@ const Game: React.FC = () => {
   const handleNewGame = () => {
     setShowResult(false)
     resetGame()
-    toast('开始新游戏！', { icon: '🎮' })
+    alert('开始新游戏！')
   }
 
   return (
@@ -47,7 +50,7 @@ const Game: React.FC = () => {
             message="正在使用双向BFS算法搜索最短路径..." 
           />
           <p className={styles.loadingTip}>
-            �� 提示：这可能需要几秒钟时间，请耐心等待...
+            💡 提示：这可能需要几秒钟时间，请耐心等待...
           </p>
         </div>
       )}

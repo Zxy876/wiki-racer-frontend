@@ -1,7 +1,11 @@
 import React from 'react'
 import styles from './Achievements.module.css'
 
-const Achievements: React.FC = () => {
+interface AchievementsProps {
+  navigate?: (path: string) => void
+}
+
+const Achievements: React.FC<AchievementsProps> = ({ navigate }) => {
   return (
     <div className={styles.container}>
       <div className={styles.header}>

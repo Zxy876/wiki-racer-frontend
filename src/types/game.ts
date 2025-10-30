@@ -1,22 +1,28 @@
-export interface GameResultProps {
-  result: {
-    path: string[];
-    duration: number;
-    start: string;
-    end: string;
-    achievements?: Achievement[];
-  };
-  onPlayAgain: () => void;
+export interface GameRequest {
+  start: string;
+  end: string;
+  user_id?: string;
 }
 
-export interface Achievement {
-  id: string;
-  name: string;
-  description: string;
-  icon: string;
+export interface GameResponse {
+  game_id: string;
+  status: string;
+  path?: string[];
+  message?: string;
+  score?: number;
+  achievements?: string[];
+  start?: string;
+  end?: string;
+  search_time?: number;
 }
 
-export interface Page {
-  title: string;
-  url: string;
+export interface GameState {
+  gameId: string;
+  status: 'idle' | 'pending' | 'completed' | 'failed';
+  path: string[];
+  start: string;
+  end: string;
+  score: number;
+  searchTime: number;
+  message?: string;
 }

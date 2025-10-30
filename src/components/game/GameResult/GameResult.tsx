@@ -1,6 +1,18 @@
 import React from 'react'
-import { GameResponse } from '../../types/game'
 import styles from './GameResult.module.css'
+
+// 内联类型定义
+interface GameResponse {
+  game_id: string;
+  status: string;
+  path?: string[];
+  message?: string;
+  score?: number;
+  achievements?: string[];
+  start?: string;
+  end?: string;
+  search_time?: number;
+}
 
 // 临时内联 formatScore 函数
 const formatScore = (score: number): string => {
@@ -51,7 +63,7 @@ export const GameResult: React.FC<GameResultProps> = ({ game, onNewGame }) => {
           </div>
 
           <div className={styles.pathSection}>
-            <h3>�� 找到的路径：</h3>
+            <h3>📋 找到的路径：</h3>
             <div className={styles.path}>
               {game.path!.map((page, index) => (
                 <div key={index} className={styles.pathStep}>

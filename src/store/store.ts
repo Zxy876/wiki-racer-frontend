@@ -1,13 +1,10 @@
-import { configureStore } from '@reduxjs/toolkit'
-
-// 创建空的 reducer 来消除警告
-const rootReducer = {
-  dummy: (state = {}) => state
+// 简化的 store，避免 @reduxjs/toolkit 依赖问题
+export const store = {
+  // 空的 store 实现
+  getState: () => ({}),
+  dispatch: (action: any) => action,
+  subscribe: (listener: () => void) => () => {}
 }
-
-export const store = configureStore({
-  reducer: rootReducer,
-})
 
 export type RootState = ReturnType<typeof store.getState>
 export type AppDispatch = typeof store.dispatch

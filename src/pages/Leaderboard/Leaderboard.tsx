@@ -1,7 +1,11 @@
 import React from 'react'
 import styles from './Leaderboard.module.css'
 
-const Leaderboard: React.FC = () => {
+interface LeaderboardProps {
+  navigate?: (path: string) => void
+}
+
+const Leaderboard: React.FC<LeaderboardProps> = ({ navigate }) => {
   return (
     <div className={styles.container}>
       <div className={styles.header}>

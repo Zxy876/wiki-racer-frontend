@@ -1,5 +1,23 @@
 import { api } from './api';
-import { GameRequest, GameResponse } from '../types/game';
+
+// 内联类型定义
+interface GameRequest {
+  start: string;
+  end: string;
+  user_id?: string;
+}
+
+interface GameResponse {
+  game_id: string;
+  status: string;
+  path?: string[];
+  message?: string;
+  score?: number;
+  achievements?: string[];
+  start?: string;
+  end?: string;
+  search_time?: number;
+}
 
 export const gameService = {
   createGame: async (request: GameRequest): Promise<GameResponse> => {

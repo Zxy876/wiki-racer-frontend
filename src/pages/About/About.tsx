@@ -1,7 +1,11 @@
 import React from 'react'
 import styles from './About.module.css'
 
-const About: React.FC = () => {
+interface AboutProps {
+  navigate?: (path: string) => void
+}
+
+const About: React.FC<AboutProps> = ({ navigate }) => {
   return (
     <div className={styles.container}>
       <div className={styles.header}>

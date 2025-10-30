@@ -1,30 +1,45 @@
-import axios from 'axios';
-
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8000';
 
-export const api = axios.create({
-  baseURL: API_BASE_URL,
-  headers: {
-    'Content-Type': 'application/json',
-  },
-});
-
-api.interceptors.request.use(
-  (config) => {
-    console.log(`Making ${config.method?.toUpperCase()} request to: ${config.url}`);
-    return config;
-  },
-  (error) => {
-    return Promise.reject(error);
+const handleResponse = async (response: Response) => {
+  if (!response.ok) {
+    const errorData = await response.json().catch(() => ({}));
+    throw new Error(errorData.detail || `HTTP error! status: ${response.status}`);
   }
-);
+  return response.json();
+};
 
-api.interceptors.response.use(
-  (response) => {
-    return response;
+export const api = {
+  get: <T>(url: string): Promise<T> => {
+    console.log(`Making GET request to: ${url}`);
+    return fetch(`${API_BASE_URL}${url}`).then(handleResponse);
   },
-  (error) => {
-    console.error('API Error:', error.response?.data || error.message);
-    return Promise.reject(error);
-  }
-);
+
+  post: <T>(url: string, data?: any): Promise<T> => {
+    console.log(`Making POST request to: ${url}`, data);
+    return fetch(`${API_BASE_URL}${url}`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: data ? JSON.stringify(data) : undefined,
+    }).then(handleResponse);
+  },
+
+  put: <T>(url: string, data?: any): Promise<T> => {
+    console.log(`Making PUT request to: ${url}`, data);
+    return fetch(`${API_BASE_URL}${url}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: data ? JSON.stringify(data) : undefined,
+    }).then(handleResponse);
+  },
+
+  delete: <T>(url: string): Promise<T> => {
+    console.log(`Making DELETE request to: ${url}`);
+    return fetch(`${API_BASE_URL}${url}`, {
+      method: 'DELETE',
+    }).then(handleResponse);
+  },
+};

@@ -12,8 +12,7 @@ export const useUser = () => {
     setError(null)
     
     try {
-      const response = await api.post('/api/users', { username })
-      const userData = response.data
+      const userData = await api.post<{ user_id: string; username: string }>('/api/users', { username })
       
       const user: User = {
         user_id: userData.user_id,
@@ -31,7 +30,7 @@ export const useUser = () => {
       setCurrentUser(user)
       return user
     } catch (err: any) {
-      const errorMessage = err.response?.data?.detail || err.message || '创建用户失败'
+      const errorMessage = err.message || '创建用户失败'
       setError(errorMessage)
       throw err
     } finally {
@@ -44,10 +43,10 @@ export const useUser = () => {
     setError(null)
     
     try {
-      const response = await api.get(`/api/users/${userId}`)
-      return response.data
+      const stats = await api.get(`/api/users/${userId}`)
+      return stats
     } catch (err: any) {
-      const errorMessage = err.response?.data?.detail || err.message || '获取用户统计失败'
+      const errorMessage = err.message || '获取用户统计失败'
       setError(errorMessage)
       throw err
     } finally {

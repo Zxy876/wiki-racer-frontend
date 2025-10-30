@@ -1,6 +1,5 @@
 export const validateWikiTitle = (title: string): boolean => {
   if (!title || title.trim().length === 0) return false;
-  // 基本验证，可以添加更多规则
   return /^[a-zA-Z0-9_()\s-]+$/.test(title);
 };
 

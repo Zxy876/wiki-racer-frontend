@@ -27,41 +27,6 @@ const About: React.FC = () => {
             <li><strong>响应式设计</strong> - 适配各种设备屏幕</li>
           </ul>
         </div>
-
-        <div className={styles.section}>
-          <h2>🛠️ 技术栈</h2>
-          <div className={styles.techStack}>
-            <div className={styles.techItem}>
-              <h3>前端</h3>
-              <ul>
-                <li>React 18 + TypeScript</li>
-                <li>Vite - 构建工具</li>
-                <li>React Router - 路由管理</li>
-                <li>CSS Modules - 样式方案</li>
-              </ul>
-            </div>
-            <div className={styles.techItem}>
-              <h3>后端</h3>
-              <ul>
-                <li>FastAPI - Web 框架</li>
-                <li>Celery - 异步任务队列</li>
-                <li>Redis - 缓存和消息代理</li>
-                <li>BeautifulSoup - 网页解析</li>
-              </ul>
-            </div>
-          </div>
-        </div>
-
-        <div className={styles.section}>
-          <h2>🎮 如何游戏</h2>
-          <ol>
-            <li>在游戏页面输入起始和目标页面标题</li>
-            <li>点击"开始搜索"按钮</li>
-            <li>系统会使用智能算法寻找最短路径</li>
-            <li>根据路径长度和速度获得分数</li>
-            <li>解锁成就，提升排名！</li>
-          </ol>
-        </div>
       </div>
     </div>
   )

@@ -1,63 +1,69 @@
-import { useState, useCallback } from 'react';
-import { gameService } from '@/services/gameService';
-import { GameRequest, GameResponse } from '@/types/game';
+import { useState, useCallback } from 'react'
+import { api } from '../services/api'
+import { GameRequest, GameResponse } from '../types/game'
 
 export const useGame = () => {
-  const [currentGame, setCurrentGame] = useState<GameResponse | null>(null);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
+  const [currentGame, setCurrentGame] = useState<GameResponse | null>(null)
+  const [loading, setLoading] = useState(false)
+  const [error, setError] = useState<string | null>(null)
 
   const createGame = useCallback(async (request: GameRequest) => {
-    setLoading(true);
-    setError(null);
+    setLoading(true)
+    setError(null)
     
     try {
-      const game = await gameService.createGame(request);
-      setCurrentGame(game);
-      return game;
+      console.log('🔄 发送游戏请求:', request)
+      const response = await api.post<GameResponse>('/api/game', request)
+      const game = response.data
+      console.log('✅ 游戏响应:', game)
+      setCurrentGame(game)
+      return game
     } catch (err: any) {
-      const errorMessage = err.response?.data?.detail || err.message || '创建游戏失败';
-      setError(errorMessage);
-      throw err;
+      console.error('❌ 创建游戏失败:', err)
+      const errorMessage = err.response?.data?.detail || err.message || '创建游戏失败'
+      setError(errorMessage)
+      throw err
     } finally {
-      setLoading(false);
+      setLoading(false)
     }
-  }, []);
+  }, [])
 
   const createGameAsync = useCallback(async (request: GameRequest) => {
-    setLoading(true);
-    setError(null);
+    setLoading(true)
+    setError(null)
     
     try {
-      const game = await gameService.createGameAsync(request);
-      setCurrentGame(game);
-      return game;
+      const response = await api.post<GameResponse>('/api/game/async', request)
+      const game = response.data
+      setCurrentGame(game)
+      return game
     } catch (err: any) {
-      const errorMessage = err.response?.data?.detail || err.message || '创建异步游戏失败';
-      setError(errorMessage);
-      throw err;
+      const errorMessage = err.response?.data?.detail || err.message || '创建异步游戏失败'
+      setError(errorMessage)
+      throw err
     } finally {
-      setLoading(false);
+      setLoading(false)
     }
-  }, []);
+  }, [])
 
   const checkGameStatus = useCallback(async (gameId: string) => {
     try {
-      const status = await gameService.getGameStatus(gameId);
-      setCurrentGame(status);
-      return status;
+      const response = await api.get(`/api/game/${gameId}`)
+      const status = response.data
+      setCurrentGame(status)
+      return status
     } catch (err: any) {
-      const errorMessage = err.response?.data?.detail || err.message || '获取游戏状态失败';
-      setError(errorMessage);
-      throw err;
+      const errorMessage = err.response?.data?.detail || err.message || '获取游戏状态失败'
+      setError(errorMessage)
+      throw err
     }
-  }, []);
+  }, [])
 
   const resetGame = useCallback(() => {
-    setCurrentGame(null);
-    setError(null);
-    setLoading(false);
-  }, []);
+    setCurrentGame(null)
+    setError(null)
+    setLoading(false)
+  }, [])
 
   return {
     currentGame,
@@ -67,5 +73,5 @@ export const useGame = () => {
     createGameAsync,
     checkGameStatus,
     resetGame,
-  };
-};
+  }
+}

@@ -9,7 +9,6 @@ export const api = axios.create({
   },
 });
 
-// 请求拦截器
 api.interceptors.request.use(
   (config) => {
     console.log(`Making ${config.method?.toUpperCase()} request to: ${config.url}`);
@@ -20,7 +19,6 @@ api.interceptors.request.use(
   }
 );
 
-// 响应拦截器
 api.interceptors.response.use(
   (response) => {
     return response;

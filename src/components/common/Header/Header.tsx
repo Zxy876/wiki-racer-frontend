@@ -1,9 +1,9 @@
-import React from 'react';
-import { Link, useLocation } from 'react-router-dom';
-import styles from './Header.module.css';
+import React from 'react'
+import { Link, useLocation } from 'react-router-dom'
+import styles from './Header.module.css'
 
-export const Header: React.FC = () => {
-  const location = useLocation();
+const Header: React.FC = () => {
+  const location = useLocation()
 
   return (
     <header className={styles.header}>
@@ -46,7 +46,7 @@ export const Header: React.FC = () => {
         </nav>
       </div>
     </header>
-  );
-};
+  )
+}
 
-export default Header;
+export default Header

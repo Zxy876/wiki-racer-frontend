@@ -5,7 +5,7 @@ export const API_CONFIG = {
 
 export const GAME_CONFIG = {
   MAX_DEPTH: 6,
-  MAX_SEARCH_TIME: 300, // 5分钟
+  MAX_SEARCH_TIME: 300,
 };
 
 export const ACHIEVEMENTS = {

@@ -11,6 +11,9 @@ export interface GameResponse {
   message?: string;
   score?: number;
   achievements?: string[];
+  start?: string;
+  end?: string;
+  search_time?: number;
 }
 
 export interface GameState {

@@ -1,4 +1,4 @@
-import { useState, useCallback } from 'react';
+import { useState, useCallback } from 'react'
 
 interface UseApiState<T> {
   data: T | null;

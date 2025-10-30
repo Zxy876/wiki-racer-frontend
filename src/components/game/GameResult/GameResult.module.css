@@ -96,18 +96,31 @@
   justify-content: center;
   font-weight: bold;
   font-size: 0.9rem;
+  flex-shrink: 0;
 }
 
 .pageTitle {
   flex: 1;
-  font-family: monospace;
+  font-family: 'Monaco', 'Menlo', monospace;
   font-size: 0.9rem;
   color: #333;
+  background: none;
+  border: none;
+  text-align: left;
+  cursor: pointer;
+  padding: 0;
+  transition: color 0.3s ease;
+}
+
+.pageTitle:hover {
+  color: #667eea;
+  text-decoration: underline;
 }
 
 .arrow {
   color: #667eea;
   font-weight: bold;
+  flex-shrink: 0;
 }
 
 .achievements {
@@ -162,6 +175,7 @@
   text-align: left;
   display: inline-block;
   color: #666;
+  margin-bottom: 20px;
 }
 
 .noPathResult li {
@@ -169,16 +183,19 @@
 }
 
 .actions {
-  text-align: center;
+  display: flex;
+  gap: 15px;
+  justify-content: center;
   padding-top: 20px;
   border-top: 1px solid #e1e5e9;
+  flex-wrap: wrap;
 }
 
 .newGameButton {
   background: linear-gradient(135deg, #28a745, #20c997);
   color: white;
   border: none;
-  padding: 15px 30px;
+  padding: 12px 24px;
   border-radius: 8px;
   font-size: 16px;
   font-weight: bold;
@@ -188,4 +205,20 @@
 
 .newGameButton:hover {
   transform: scale(1.05);
+}
+
+.wikiButton {
+  background: #6c757d;
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.wikiButton:hover {
+  background: #545b62;
 }

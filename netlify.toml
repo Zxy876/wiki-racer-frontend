@@ -5,13 +5,11 @@
 [build.environment]
   NODE_VERSION = "18"
 
-# ✅ 后端 API 代理规则（必须放在 SPA 路由前面）
 [[redirects]]
   from = "/api/*"
-  to = "http://123.207.20.145:8000/:splat"
+  to = "https://www.generalgame.work/api/:splat"
   status = 200
   force = true
-
 # ✅ 单页应用（SPA）路由
 [[redirects]]
   from = "/*"

@@ -1,4 +1,5 @@
 // src/api/api.ts
+// ✅ 注意这里，默认不加 /api，由环境变量控制
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || '';
 
 const handleResponse = async (response: Response) => {
@@ -19,9 +20,7 @@ export const api = {
     console.log(`Making POST request to: ${API_BASE_URL}${url}`, data);
     return fetch(`${API_BASE_URL}${url}`, {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
+      headers: { 'Content-Type': 'application/json' },
       body: data ? JSON.stringify(data) : undefined,
     }).then(handleResponse);
   },
@@ -30,9 +29,7 @@ export const api = {
     console.log(`Making PUT request to: ${API_BASE_URL}${url}`, data);
     return fetch(`${API_BASE_URL}${url}`, {
       method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json',
-      },
+      headers: { 'Content-Type': 'application/json' },
       body: data ? JSON.stringify(data) : undefined,
     }).then(handleResponse);
   },

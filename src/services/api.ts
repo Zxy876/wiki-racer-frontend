@@ -1,4 +1,5 @@
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://123.207.20.145:8000';
+// src/api/api.ts
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || '';
 
 const handleResponse = async (response: Response) => {
   if (!response.ok) {
@@ -10,12 +11,12 @@ const handleResponse = async (response: Response) => {
 
 export const api = {
   get: <T>(url: string): Promise<T> => {
-    console.log(`Making GET request to: ${url}`);
+    console.log(`Making GET request to: ${API_BASE_URL}${url}`);
     return fetch(`${API_BASE_URL}${url}`).then(handleResponse);
   },
 
   post: <T>(url: string, data?: any): Promise<T> => {
-    console.log(`Making POST request to: ${url}`, data);
+    console.log(`Making POST request to: ${API_BASE_URL}${url}`, data);
     return fetch(`${API_BASE_URL}${url}`, {
       method: 'POST',
       headers: {
@@ -26,7 +27,7 @@ export const api = {
   },
 
   put: <T>(url: string, data?: any): Promise<T> => {
-    console.log(`Making PUT request to: ${url}`, data);
+    console.log(`Making PUT request to: ${API_BASE_URL}${url}`, data);
     return fetch(`${API_BASE_URL}${url}`, {
       method: 'PUT',
       headers: {
@@ -37,7 +38,7 @@ export const api = {
   },
 
   delete: <T>(url: string): Promise<T> => {
-    console.log(`Making DELETE request to: ${url}`);
+    console.log(`Making DELETE request to: ${API_BASE_URL}${url}`);
     return fetch(`${API_BASE_URL}${url}`, {
       method: 'DELETE',
     }).then(handleResponse);

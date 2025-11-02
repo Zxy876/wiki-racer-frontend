@@ -7,10 +7,10 @@
 
 [[redirects]]
   from = "/api/*"
-  to = "https://www.generalgame.work/api/:splat"
+  to = "https://www.generalgame.work/:splat"
   status = 200
   force = true
-# ✅ 单页应用（SPA）路由
+
 [[redirects]]
   from = "/*"
   to = "/index.html"

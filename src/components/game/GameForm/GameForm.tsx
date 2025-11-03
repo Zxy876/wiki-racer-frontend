@@ -1,24 +1,26 @@
 import React, { useState } from 'react'
 import styles from './GameForm.module.css'
 
-// 临时内联 helper 函数
+// ✅ 改进：支持中文百度百科词条标题
 const validateWikiTitle = (title: string): boolean => {
   if (!title || title.trim().length === 0) return false;
-  return /^[a-zA-Z0-9_()\s-]+$/.test(title);
+  // 支持中文、英文、数字、下划线、括号、点、空格、中点、短横线、全角括号
+  return /^[\u4e00-\u9fa5A-Za-z0-9_()\s\-·（）·：:、]+$/.test(title);
 };
 
+// ✅ 改进：示例中可包含中英文混合词条
 const generateRandomWikiTitle = (): string => {
   const titles = [
-    'Python_(programming_language)',
-    'Artificial_intelligence',
-    'Machine_learning',
-    'World_Wide_Web',
-    'Computer_science',
-    'Mathematics',
-    'Physics',
-    'Chemistry',
-    'Biology',
-    'History'
+    '人工智能',
+    '计算机科学',
+    '机器学习',
+    '深度学习',
+    '迪丽热巴',
+    '杨幂',
+    '生物学',
+    '化学',
+    '物理学',
+    '历史'
   ];
   return titles[Math.floor(Math.random() * titles.length)];
 };
@@ -59,18 +61,21 @@ export const GameForm: React.FC<GameFormProps> = ({ onGameStart, loading }) => {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
     if (validateForm()) {
-      onGameStart(start.trim(), end.trim())
+      // ✅ 将中文标题进行 URL 编码，后端才能正确处理
+      const encodedStart = encodeURIComponent(start.trim())
+      const encodedEnd = encodeURIComponent(end.trim())
+      onGameStart(encodedStart, encodedEnd)
     }
   }
 
   const handleRandomExample = () => {
     let newStart = generateRandomWikiTitle()
     let newEnd = generateRandomWikiTitle()
-    
+
     while (newStart === newEnd) {
       newEnd = generateRandomWikiTitle()
     }
-    
+
     setStart(newStart)
     setEnd(newEnd)
     setErrors({})
@@ -82,11 +87,12 @@ export const GameForm: React.FC<GameFormProps> = ({ onGameStart, loading }) => {
     setErrors({})
   }
 
+  // ✅ 示例列表中支持中英文混合
   const popularExamples = [
-    { start: 'Python_(programming_language)', end: 'Artificial_intelligence' },
-    { start: 'Mathematics', end: 'Computer_science' },
-    { start: 'Physics', end: 'Quantum_mechanics' },
-    { start: 'Biology', end: 'Genetics' },
+    { start: '人工智能', end: '机器学习' },
+    { start: '迪丽热巴', end: '杨幂' },
+    { start: '生物学', end: '遗传学' },
+    { start: '计算机科学', end: '互联网' },
   ]
 
   const handleExampleClick = (example: typeof popularExamples[0]) => {
@@ -108,7 +114,7 @@ export const GameForm: React.FC<GameFormProps> = ({ onGameStart, loading }) => {
               setStart(e.target.value)
               if (errors.start) setErrors({ ...errors, start: undefined })
             }}
-            placeholder="例如: Python_(programming_language)"
+            placeholder="例如: 人工智能 或 Python_(programming_language)"
             disabled={loading}
             className={errors.start ? styles.error : ''}
           />
@@ -116,9 +122,9 @@ export const GameForm: React.FC<GameFormProps> = ({ onGameStart, loading }) => {
         </div>
 
         <div className={styles.swapButton}>
-          <button 
-            type="button" 
-            onClick={handleSwap} 
+          <button
+            type="button"
+            onClick={handleSwap}
             disabled={loading}
             title="交换起始和目标页面"
           >
@@ -136,7 +142,7 @@ export const GameForm: React.FC<GameFormProps> = ({ onGameStart, loading }) => {
               setEnd(e.target.value)
               if (errors.end) setErrors({ ...errors, end: undefined })
             }}
-            placeholder="例如: Artificial_intelligence"
+            placeholder="例如: 杨幂 或 Artificial_intelligence"
             disabled={loading}
             className={errors.end ? styles.error : ''}
           />
@@ -144,16 +150,16 @@ export const GameForm: React.FC<GameFormProps> = ({ onGameStart, loading }) => {
         </div>
 
         <div className={styles.actions}>
-          <button 
-            type="submit" 
+          <button
+            type="submit"
             className={styles.primaryButton}
             disabled={loading || !start.trim() || !end.trim()}
           >
             {loading ? '🔍 搜索中...' : '🎯 开始搜索'}
           </button>
-          
-          <button 
-            type="button" 
+
+          <button
+            type="button"
             onClick={handleRandomExample}
             className={styles.secondaryButton}
             disabled={loading}
